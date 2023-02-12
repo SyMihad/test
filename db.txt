@@ -1,0 +1,15 @@
+1) details grade of 2nd maximum salary holder-> select emp.*, grade from emp, salgrade where sal between losal and hisal and sal in(select max(sal) from emp where sal<(select max(sal) from emp))
+
+2) grade 2 mgr from dept 10,20 -> select emp.*, grade from emp, salgrade where emp.sal between losal and hisal and emp.deptno in(2,3) and grade=2
+
+3) highest paid employee finance belong from grade 2,3 -> select emp.*,dname, grade from emp, dept, salgrade where emp.deptno=dept.deptno and dname='RESEARCH' and emp.job='ANALYST' and emp.sal between losal and hisal and grade in(2,3)
+
+4) dame with most senior employee -> select emp.*, dname from emp, dept where emp.deptno=dept.deptno and hiredate=(select min(hiredate) from emp)
+
+5)department with the highest number of employees -> select ename, job, sal, grade, dept.deptno from emp, dept, salgrade where emp.deptno=dept.deptno and sal between losal and hisal and emp.deptno=(select dept.deptno from emp, dept where emp.deptno=dept.deptno group by dept.deptno having count(*)=(select max(count(*)) from emp, dept where emp.deptno=dept.deptno group by dept.deptno))
+
+6) 
+7) grade 2,3 salesman from Chicago Dallas -> select emp.*, grade, loc from emp, salgrade, dept where emp.deptno=dept.deptno and sal between losal and hisal and empno in(select empno from emp, dept where emp.deptno=dept.deptno and job='SALESMAN' and loc in('CHICAGO', 'DALLAS'))
+
+8) name of loc where highest emp working -> select loc from dept where deptno=(select dept.deptno from dept, emp where emp.deptno=dept.deptno group by emp.deptno having count(*)=(select max(count(*)) from dept, emp where dept.deptno=emp.deptno group by emp.deptno))
+
